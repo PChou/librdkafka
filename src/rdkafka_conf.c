@@ -569,13 +569,17 @@ static const struct rd_kafka_property rd_kafka_properties[] = {
           "This client's Kerberos principal name. "
           "(Not supported on Windows, will use the logon user's principal).",
 	  .sdef = "kafkaclient" },
+	{ _RK_GLOBAL, "sasl.kerberos.domain.name", _RK_C_STR,
+	  _RK(sasl.domain_name),
+          "This client's Kerberos domain name. ",
+	  .sdef = NULL },
 #ifndef _MSC_VER
 	{ _RK_GLOBAL, "sasl.kerberos.kinit.cmd", _RK_C_STR,
 	  _RK(sasl.kinit_cmd),
 	  "Full kerberos kinit command string, %{config.prop.name} is replaced "
 	  "by corresponding config object value, %{broker.name} returns the "
 	  "broker's hostname.",
-	  .sdef = "kinit -S \"%{sasl.kerberos.service.name}/%{broker.name}\" "
+      .sdef = "kinit -S \"%{sasl.kerberos.service.name}/%{broker.name}\" "
 	  "-k -t \"%{sasl.kerberos.keytab}\" %{sasl.kerberos.principal}" },
 	{ _RK_GLOBAL, "sasl.kerberos.keytab", _RK_C_STR,
 	  _RK(sasl.keytab),

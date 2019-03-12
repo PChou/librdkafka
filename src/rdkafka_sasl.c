@@ -195,7 +195,11 @@ int rd_kafka_sasl_client_new (rd_kafka_transport_t *rktrans,
                 return -1;
         }
 
-        rd_strdupa(&hostname, rktrans->rktrans_rkb->rkb_nodename);
+        if ( rk->rk_conf.sasl.domain_name ) {
+            rd_strdupa(&hostname, rk->rk_conf.sasl.domain_name);
+        } else {
+            rd_strdupa(&hostname, rktrans->rktrans_rkb->rkb_nodename);
+        }
         if ((t = strchr(hostname, ':')))
                 *t = '\0';  /* remove ":port" */
 

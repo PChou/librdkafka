@@ -1647,6 +1647,11 @@ rd_kafka_t *rd_kafka_new (rd_kafka_type_t type, rd_kafka_conf_t *app_conf,
                         goto fail;
                 }
         }
+#ifndef _MSC_VER
+        if (rk->rk_conf.sasl.domain_name) {
+            rk->rk_conf.sasl.kinit_cmd = "kinit -S \"%{sasl.kerberos.service.name}/%{sasl.kerberos.domain.name}\" -k -t \"%{sasl.kerberos.keytab}\" %{sasl.kerberos.principal}";
+        }
+#endif
 
 #if WITH_SSL
 	if (rk->rk_conf.security_protocol == RD_KAFKA_PROTO_SSL ||
